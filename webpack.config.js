@@ -41,7 +41,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: "./",
-    port: 5000
+    port: 5001
   },
   devtool: "source-map",
   resolve: {
