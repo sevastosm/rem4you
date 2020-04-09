@@ -47,12 +47,3 @@ export const makeRequest = async (
   }
 };
 
-// Plans
-export const fetchPlans = async () => {
-  const response = await axios.get(`${appUrl}/plans/take/0`, {
-    params: {
-      pars: params1,
-    },
-  });
-  return response;
-};
