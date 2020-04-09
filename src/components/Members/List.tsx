@@ -59,7 +59,7 @@ const List: React.FC<IAppProps> = props => {
       {members ? (
         <>
         <br/>
-        <RadioGroupWithLabels/>
+        {/* <RadioGroupWithLabels/> */}
         {/* <MaterialTableComponent members={members} /> */}
         </>
       ) : (

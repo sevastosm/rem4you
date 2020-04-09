@@ -9,7 +9,6 @@ let user = {
 let token: string;
 
 export const getToken = async () => {
-  debugger;
   let response = await fetch("http://api.rem4you.com/api/Token", {
     method: "POST",
     headers: {
@@ -19,7 +18,7 @@ export const getToken = async () => {
   });
   let result = await response.json();
   token = result.access_token;
-  localStorage.setItem("token", token);
+  localStorage.setItem("AppToken", token);
   console.log(result);
   return result;
 };
@@ -32,7 +31,7 @@ export const makeRequest = async (
   url: string = "https://api.rem4you.com/api/Token",
   body: any = user
 ) => {
-  const auth = localStorage.getItem("token");
+  const auth = localStorage.getItem("AppToken");
   if (auth) {
     const defaultHeaders = {
       Accept: 'application/json',

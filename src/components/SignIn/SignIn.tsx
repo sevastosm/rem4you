@@ -68,11 +68,8 @@ export default function SignIn(props: { history: any; }) {
 
     e.preventDefault();
     getToken().then(data=>{
-      localStorage.setItem('AppToken',data.access_token)
+      history.push('/dashboard');
     })
-    history.push('/dashboard');
-    //redirect to ./
-    // email == "gmlogic@gmail.com" && password == "mgergm++" && props.click();
   };
 
   return (
@@ -80,7 +77,7 @@ export default function SignIn(props: { history: any; }) {
       <CssBaseline />
       <div className={classes.paper}>
       <Typography component="h1" variant="h3">
-         Book-It
+         Rem-4U
         </Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
