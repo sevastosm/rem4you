@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
-import {getToken} from "../../api/fetch"
+import { getToken } from "../../api/fetch";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,55 +30,69 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-export default function SignIn(props: { history: any; }) {
+const SignIn = () => {
   const classes = useStyles();
   const [email, setEmail] = React.useState("");
   const [password, setPassWord] = React.useState("");
+  const [message, setMessage] = React.useState(false);
 
-  const handleEmail = e => {
+  const handleEmail = (e) => {
+    setMessage(false);
     console.log(e.target.value);
     setEmail(e.target.value);
   };
-  const handlePassword = e => {
+  const handlePassword = (e) => {
+    setMessage(false);
+
     console.log(e.target.value);
     setPassWord(e.target.value);
   };
 
-  let history = useHistory()
-  const handleSighIn = e => {
-
+  let history = useHistory();
+  const handleSighIn = (e) => {
     e.preventDefault();
-    getToken().then(data=>{
-      history.push('/dashboard');
-    })
+    //Get login token
+    getToken({ username: email, password: password }).then((token) => {
+      token ? history.push("/dashboard") : setMessage(true);
+    });
   };
+  const checkAuth = () => {
+    const auth = localStorage.getItem("AppToken");
+    if (auth) {
+      return true;
+    }
+    return false;
+  };
+  React.useEffect(() => {
+    // checkAuth() && history.push("/dashboard");
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-      <Typography component="h1" variant="h3">
-         Rem-4U
+        <Typography component="h1" variant="h3">
+          Rem-4U
         </Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -85,7 +100,7 @@ export default function SignIn(props: { history: any; }) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form id="form1" className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -112,6 +127,8 @@ export default function SignIn(props: { history: any; }) {
             autoComplete="current-password"
             onChange={handlePassword}
           />
+          {message && <span>Wrong credentials !!</span>}
+          <br />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -145,4 +162,6 @@ export default function SignIn(props: { history: any; }) {
       </Box>
     </Container>
   );
-}
+};
+
+export default SignIn;

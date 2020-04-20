@@ -8,15 +8,14 @@ import RadioGroupWithLabels from "../UI/RadioGroupWithLabels";
 interface IAppProps {}
 
 const List: React.FC<IAppProps> = props => {
-  const [members, setMembers] = React.useState([]);
+  const [members, setMembers] = React.useState('');
   const [itemForm, setItemForm] = React.useState(false);
   const [formStatus, setFormStatus] = React.useState("add");
   const [selectedMember, setselectedMember] = React.useState({});
 
   // Similar to componentDidMount and componentDidUpdate:
   React.useEffect(() => {
-    fetchData();
-    // Update the document title using the browser API
+    fetchData()
   }, []);
 
   const fetchData = () =>
@@ -24,10 +23,10 @@ const List: React.FC<IAppProps> = props => {
     fetchMembers().then(response => {
       let columns = [];
       let data = [];
-      Object.keys(response.data[0]).map((key, i) => {
+      Object.keys(response[0]).map((key, i) => {
         columns.push({ title: key.toUpperCase(), field: key });
       });
-      response.data.map((d, i) => {
+      response.map((d, i) => {
        data.push(d);
       });
       let setData = {
@@ -55,13 +54,15 @@ const List: React.FC<IAppProps> = props => {
   };
 
   return (
+    
     <div>
+   { console.log("members", members)}
       {members ? (
         <>
         <br/>
         {/* <RadioGroupWithLabels/> */}
-        {/* <MaterialTableComponent members={members} /> */}
-        </>
+       <MaterialTableComponent members={members} />
+       </>
       ) : (
         <div>Loading Data..</div>
       )}
