@@ -29,10 +29,18 @@ export const MainListItems = (props) => {
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
+        <Link to={`${url}/users`}>
+          <ListItemText primary="Users" />
+        </Link>
+      </ListItem>
+      {/* <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
         <Link to={`${url}/members`}>
           <ListItemText primary="Members" />
         </Link>
-      </ListItem>
+      </ListItem> */}
       {/* <ListItem button>
         <ListItemIcon>
           <EventNote />

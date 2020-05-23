@@ -32,7 +32,6 @@ export const getToken = async (creds:any) => {
 export const makeRequest = async (
   method: string = "POST",
   url: string = "https://api.rem4you.com/api/Token",
-  body: any = user
 ) => {
   const auth = localStorage.getItem("AppToken");
   if (auth) {
@@ -48,4 +47,3 @@ export const makeRequest = async (
     return result;
   }
 };
-

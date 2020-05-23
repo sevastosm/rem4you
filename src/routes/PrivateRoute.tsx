@@ -9,6 +9,7 @@ import {
 
 const PrivateRoute=({ children, ...rest })=> {
     const auth = localStorage.getItem("AppToken");
+    console.log(auth)
     return (
       <Route
         {...rest}

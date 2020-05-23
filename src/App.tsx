@@ -5,10 +5,6 @@ import IntroRoutes from './routes/IntroRoutes'
 
 export default function App(): JSX.Element {
   return (
-    <IntroRoutes />
+    navigator.onLine?<IntroRoutes />:<div>No internet connection</div>
   );
 }
-
-
-
-

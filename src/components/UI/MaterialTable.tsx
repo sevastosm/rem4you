@@ -11,7 +11,7 @@ interface TableState {
 
 export default function MaterialTableComponent(props) {
   const [state, setState] = React.useState<TableState>({});
-
+ const {deleteuser} = props
 
     // Similar to componentDidMount and componentDidUpdate:
     React.useEffect(() => {
@@ -19,7 +19,6 @@ export default function MaterialTableComponent(props) {
         // Update the document title using the browser API
       }, [props.members]);
 
-  console.log(props)
 
   return (
     <MaterialTable
@@ -59,6 +58,7 @@ export default function MaterialTableComponent(props) {
           }),
         onRowDelete: oldData =>
           new Promise(resolve => {
+            deleteuser(oldData.id)
             setTimeout(() => {
               resolve();
               setState(prevState => {

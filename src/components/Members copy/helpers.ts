@@ -13,13 +13,3 @@ export const  fetchMembers= async ()=>{
     })
     
 }
-export const  deleteMember= async (id)=>{
-let params1:any = {SearchValue: "ΣΤΕΛ",BOption: 0,DFrom: "12/31/2013",DTo: "12/31/2013",TakeRecs:0,Id:0,LastId:0}
-
-
-  return await makeRequest("GET",`http://api.rem4you.com/api/accounts/${id}`).then(response=>{
-      console.log("MEMBERS",response)
-      return response
-    })
-    
-}

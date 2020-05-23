@@ -7,6 +7,7 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import Members from '../components/Members/Members'
+import Users from '../components/Users/Users'
 import Account from '../components/Account'
 
 
@@ -28,6 +29,9 @@ const DashBoardRoutes=()=> {
           <Switch>
           <Route path={`${path}/members`}>
               <Members />
+            </Route>
+            <Route path={`${path}/users`}>
+              <Users />
             </Route>
             <Route path={`${path}/account`}>
               <Account />

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import { Link as LinkTo ,useRouteMatch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
-import { getToken } from "../../api/fetch";
+import { registerUser } from "./helpers";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,8 +16,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-
 
 function Copyright() {
   return (
@@ -52,12 +50,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
-  const url = window.location.host
-
+const SignUp = () => {
   const classes = useStyles();
   const [email, setEmail] = React.useState("");
+  const [userName, setUserName] = React.useState("");
+  const [userFirstName, setUserFirstName] = React.useState("");
+  const [userLastName, setUserLastName] = React.useState("");
+
+
   const [password, setPassWord] = React.useState("");
+  const [passwordConfirm, setPassWordConfirm] = React.useState("");
+
   const [message, setMessage] = React.useState(false);
 
   const handleEmail = (e) => {
@@ -65,31 +68,48 @@ const SignIn = () => {
     console.log(e.target.value);
     setEmail(e.target.value);
   };
+  const handleUserName = (e) => {
+    setMessage(false);
+    console.log(e.target.value);
+    setUserName(e.target.value);
+  };
+  const handleUserFirstName = (e) => {
+    setMessage(false);
+    console.log(e.target.value);
+    setUserFirstName(e.target.value);
+  }
+  const handleUserLastName = (e) => {
+    setMessage(false);
+    console.log(e.target.value);
+    setUserLastName(e.target.value);
+  }
+  
   const handlePassword = (e) => {
     setMessage(false);
 
     console.log(e.target.value);
     setPassWord(e.target.value);
   };
+  const handlePasswordConfirm = (e) => {
+    setMessage(false);
 
-  let history = useHistory();
-  const handleSighIn = (e) => {
+    console.log(e.target.value);
+    setPassWordConfirm(e.target.value);
+  };
+  // let history = useHistory();
+  const handleSighUp = (e) => {
     e.preventDefault();
-    //Get login token
-    getToken({ username: email, password: password }).then((token) => {
-      token ? history.push("/dashboard") : setMessage(true);
+    registerUser({
+      email: email,
+      username: userName,
+      firstname:userFirstName,
+      lastname:userFirstName,
+      password: password,
+      confirmPassword: passwordConfirm,
+    }).then((response) => {
+      console.log(response);
     });
   };
-  const checkAuth = () => {
-    const auth = localStorage.getItem("AppToken");
-    if (auth) {
-      return true;
-    }
-    return false;
-  };
-  React.useEffect(() => {
-    // checkAuth() && history.push("/dashboard");
-  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -102,7 +122,7 @@ const SignIn = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign Up
         </Typography>
         <form id="form1" className={classes.form} noValidate>
           <TextField
@@ -123,29 +143,81 @@ const SignIn = () => {
             margin="normal"
             required
             fullWidth
+            id="username"
+            label="User Name"
+            name="username"
+            autoComplete=""
+            autoFocus
+            // defaultValue={email}
+            onChange={handleUserName}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="firstName"
+            label="First Name"
+            name="firstName"
+            autoComplete=""
+            autoFocus
+            // defaultValue={''}
+            onChange={handleUserFirstName}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="last Name"
+            name="lastName"
+            autoComplete=""
+            autoFocus
+            // defaultValue={''}
+            onChange={handleUserLastName}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             name="password"
             label="Password"
             type="password"
             id="password"
             defaultValue={password}
-            autoComplete="current-password"
+            autoComplete=""
             onChange={handlePassword}
           />
-          {message && <span>Wrong credentials !!</span>}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Confirm Password"
+            type="password"
+            id="passwordconfirm"
+            // defaultValue={password}
+            autoComplete=""
+            onChange={handlePasswordConfirm}
+          />
+          {message && <span>Pasword not match !!</span>}
           <br />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSighIn}
+            onClick={handleSighUp}
           >
-            Sign In
+            Sign Up
           </Button>
           <Grid container>
             <Grid item xs>
@@ -154,9 +226,7 @@ const SignIn = () => {
               </Link>
             </Grid>
             <Grid item>
-              <LinkTo to="/signup" >
-                {"Don't have an account? Sign Up"}
-              </LinkTo>
+              <Link href="/">Back to home</Link>
             </Grid>
           </Grid>
         </form>
@@ -168,4 +238,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
