@@ -11,6 +11,5 @@ export const registerUser = async (creds:any) => {
     body: JSON.stringify(creds),
   });
   let result = await response.json();
-  alert('USER CREATED !')
   console.log('registerUserresult',result);
 };

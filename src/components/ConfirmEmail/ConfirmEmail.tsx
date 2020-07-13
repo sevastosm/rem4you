@@ -1,31 +1,35 @@
 import * as React from "react";
-import * as queryString from 'query-string'
-import {confirmEmail} from './helpers'
- 
-import {
-    BrowserRouter as Router,
-    useLocation,
-  } from "react-router-dom";
+import * as queryString from "query-string";
+import { confirmEmail } from "./helpers";
 
-interface IAppProps {
-}
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 
-const useEffect= React.useEffect
+interface IAppProps {}
 
-const ConfirmEmail: React.FunctionComponent<IAppProps> = props => {
+const useEffect = React.useEffect;
+const useState = React.useState;
 
-   
 
-    const location =useLocation();
-    const values = queryString.parse(location.search)
-    console.log(values.userId)
-    console.log(values.code)
-    useEffect(() => {
-      confirmEmail(values.userId,values.code)
-    }, [])  
+const ConfirmEmail: React.FunctionComponent<IAppProps> = (props) => {
+
+  const [message, setResponseMessage] = useState(null);
+
+  const location = useLocation();
+  const values = queryString.parse(location.search);
+  const correctedus: any = values.userId.split(" ").join("+");
+  const corrected: any = values.code.split(" ").join("+");
+  useEffect(() => {
+    confirmEmail(correctedus, corrected).then((response) => {
+      if(response){
+        response.result ==="Ok"?setResponseMessage("Acount Activated"):setResponseMessage(response.result)
+      }
+    });
+  }, []);
   return (
-
-   <div>Cinfrm mail</div>
+    <div>
+      Confirm mail
+      <h4>{message&&`Acount confirmation: ${message}`}</h4>
+    </div>
   );
 };
 
