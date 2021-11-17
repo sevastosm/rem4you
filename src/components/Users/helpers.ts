@@ -7,7 +7,7 @@ let params1:any = {SearchValue: "ΣΤΕΛ",BOption: 0,DFrom: "12/31/2013",DTo: "
 params1=JSON.stringify(params1)
 export const  fetchUsers= async ()=>{
 
-  return await makeRequest("GET",`http://api.rem4you.com/api/accounts/users`).then(response=>{
+  return await makeRequest("GET",`https://api.rem4you.com/api/accounts/users`).then(response=>{
       console.log("MEMBERS",response)
       return response
     })
@@ -15,7 +15,7 @@ export const  fetchUsers= async ()=>{
 }
 
 export const  deleteUser= async (id)=>{
-  return await makeRequest("DELETE",`http://api.rem4you.com/api/accounts/user/${id}`).then(response=>{
+  return await makeRequest("DELETE",`https://api.rem4you.com/api/accounts/user/${id}`).then(response=>{
       console.log("deleteUser",response)
       return response
     })

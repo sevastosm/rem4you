@@ -3,7 +3,7 @@ import { appUrl } from "../../config";
 
 
 export const registerUser = async (creds:any) => {
-  let response = await fetch("http://api.rem4you.com/api/accounts/create", {
+  let response = await fetch("https://api.rem4you.com/api/accounts/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
