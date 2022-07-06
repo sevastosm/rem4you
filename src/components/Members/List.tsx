@@ -1,50 +1,49 @@
 import * as React from "react";
 import Item from "./Item";
-import { fetchMembers, AddMember } from "./helpers";
+import { fetchMembers } from "./helpers";
 import ItemDetails from "./Itemdetails";
 import MaterialTableComponent from "../UI/MaterialTable";
 import RadioGroupWithLabels from "../UI/RadioGroupWithLabels";
 
 interface IAppProps {}
 
-const List: React.FC<IAppProps> = props => {
-  const [members, setMembers] = React.useState('');
+const List: React.FC<IAppProps> = (props) => {
+  const [members, setMembers] = React.useState("");
   const [itemForm, setItemForm] = React.useState(false);
   const [formStatus, setFormStatus] = React.useState("add");
   const [selectedMember, setselectedMember] = React.useState({});
 
   // Similar to componentDidMount and componentDidUpdate:
   React.useEffect(() => {
-    fetchData()
+    fetchData();
   }, []);
 
   const fetchData = () =>
-   
-    fetchMembers().then(response => {
+    fetchMembers().then((response) => {
       let columns = [];
       let data = [];
       Object.keys(response[0]).map((key, i) => {
         columns.push({ title: key.toUpperCase(), field: key });
       });
       response.map((d, i) => {
-       data.push(d);
+        data.push(d);
       });
       let setData = {
         columns: columns,
-        data: data
+        data: data,
       };
       setMembers(setData);
     });
 
-  const handleAdditem = e => {
+  const handleAdditem = (e) => {
     e.preventDefault();
     setItemForm(true);
     setFormStatus("add");
-    AddMember();
+    // AddMember();
   };
 
   const handleSelectedItem = (id: string) => {
-    let selectedItem = members.filter(member => {
+    let selectedItem = members.filter((member) => {
       return member.MembersID === id;
     });
     console.log("SelectedItem", selectedItem);
@@ -54,15 +53,14 @@ const List: React.FC<IAppProps> = props => {
   };
 
   return (
-    
     <div>
-   { console.log("members", members)}
+      {console.log("members", members)}
       {members ? (
         <>
-        <br/>
-        {/* <RadioGroupWithLabels/> */}
-       <MaterialTableComponent members={members} />
-       </>
+          <br />
+          {/* <RadioGroupWithLabels/> */}
+          <MaterialTableComponent members={members} />
+        </>
       ) : (
         <div>Loading Data..</div>
       )}
